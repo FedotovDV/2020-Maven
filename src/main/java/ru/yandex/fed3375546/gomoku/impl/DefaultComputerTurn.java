@@ -23,6 +23,7 @@ public class DefaultComputerTurn implements ComputerTurn {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultComputerTurn.class);
 	private GameTable gameTable;
 	private int winCount = DefaultConstants.WIN_COUNT;
+	private Random random = new Random();
 	
 	@Override
 	public void setGameTable(GameTable gameTable) {
@@ -59,7 +60,7 @@ public class DefaultComputerTurn implements ComputerTurn {
 	protected Cell makeRandomTurn() {
 		List<Cell> emptyCells = getAllEmptyCells();
 		if (emptyCells.size() > 0) {
-			Cell randomCell = emptyCells.get(new Random().nextInt(emptyCells.size()));
+			Cell randomCell = emptyCells.get(random.nextInt(emptyCells.size()));
 			gameTable.setValue(randomCell.getRowIndex(), randomCell.getColIndex(), CellValue.COMPUTER);
 			LOGGER.info("Computer random turn is {}", randomCell);
 			return randomCell;
@@ -229,7 +230,7 @@ public class DefaultComputerTurn implements ComputerTurn {
 						return cells.get(i - 1);
 					}
 				} else {
-					boolean searchDirectionAsc = new Random().nextBoolean();
+					boolean searchDirectionAsc = random.nextBoolean();
 					int first = searchDirectionAsc ? i + 1 : i - 1;
 					int second = searchDirectionAsc ? i - 1 : i + 1;
 					if(isCellEmpty(cells.get(first))) {
